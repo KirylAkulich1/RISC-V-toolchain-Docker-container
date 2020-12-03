@@ -22,7 +22,10 @@ RUN clone https://github.com/riscv/riscv-tests
 RUN cd riscv-tests
 RUN git submodule update --init --recursive
 RUN autoconf
-RUN ./configure --prefix=$RISCV/target
+RUN ./configure --prefix=/opt/riscv/target
+COPY patch.txt /riscv-tests/
+RUN git apply patch.txt
 RUN make
 RUN make install
 RUN cp -avf /riscv-tests/benchmarks /tests/
+RUN cp -avf  /riscv-tests/isa /tests/
