@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-ENV RISCV=/opt/riscv32
+ENV RISCV=/opt/riscv
 RUN apt-get update 
 RUN apt-get install -y git
 RUN apt install tree
@@ -17,6 +17,7 @@ RUN cd build
 RUN ../configure --prefix=/opt/riscv --with-arch=$1 --with-abi=$2
 RUN make && make install 
 
+WORKDIR /
 VOLUME [ "/tests" ]
 RUN clone https://github.com/riscv/riscv-tests
 RUN cd riscv-tests
